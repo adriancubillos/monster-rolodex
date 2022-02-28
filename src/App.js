@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import { CardList } from "./Components/card-list/card-list.component";
+import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -24,11 +25,10 @@ class App extends Component {
     );
     return (
       <div className="App">
-        <input
-          type="search"
-          placeholder="Search Monsters"
-          onChange={(e) => this.setState({ searchFiled: e.target.value })}
-        ></input>
+        <SearchBox
+          placeHolder="Search Monsters"
+          handelChange={(e) => this.setState({ searchFiled: e.target.value })}
+        ></SearchBox>
         <CardList monsters={filteredMonsters}></CardList>
       </div>
     );
