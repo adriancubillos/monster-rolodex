@@ -10,6 +10,10 @@ class App extends Component {
       monsters: [],
       searchFiled: "",
     };
+
+    // HACK
+    // we use arrow function instead of this
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -17,6 +21,10 @@ class App extends Component {
       .then((response) => response.json())
       .then((users) => this.setState({ monsters: users }));
   }
+
+  handleChange = (e) => {
+    this.setState({ searchFiled: e.target.value });
+  };
 
   render() {
     const { monsters, searchFiled } = this.state;
@@ -27,7 +35,7 @@ class App extends Component {
       <div className="App">
         <SearchBox
           placeHolder="Search Monsters"
-          handelChange={(e) => this.setState({ searchFiled: e.target.value })}
+          handelChange={this.handleChange}
         ></SearchBox>
         <CardList monsters={filteredMonsters}></CardList>
       </div>
