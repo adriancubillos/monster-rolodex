@@ -1,8 +1,47 @@
-import React, { Component } from "react";
-import "./App.css";
-import CardList from "./components/card-list/card-list.component";
-import SearchBox from "./components/search-box/search-box.component";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import CardList from './components/card-list/card-list.component';
+import SearchBox from './components/search-box/search-box.component';
 
+const App = () => {
+  //          [value, setValue]   =  initial State
+  const [searchField, setSearchField] = useState('');
+  const [monsters, setMonsters] = useState([]);
+  const [filteredMonsters, setFilteredMonsters] = useState(monsters);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((users) => setMonsters(users));
+  }, []);
+
+  useEffect(() => {
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField)
+    );
+    setFilteredMonsters(filteredMonsters);
+  }, [monsters, searchField]);
+
+  const onSearchChange = ({ target }) => {
+    setSearchField(target.value.toLowerCase());
+  };
+
+  return (
+    <div className='App'>
+      <h1 className='app-title'>Monsters Rolodex</h1>
+      <SearchBox
+        className='monsters-search-box'
+        onChangeHandler={onSearchChange}
+        placeHolder='Search Monsters'
+      ></SearchBox>
+      <CardList monsters={filteredMonsters}></CardList>
+    </div>
+  );
+};
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /*
 class App extends Component {
   constructor() {
     super();
@@ -47,14 +86,15 @@ class App extends Component {
       <div className="App">
         <h1 className="app-title">Monsters Rolodex</h1>
         <SearchBox
-          className="search-box-monsters"
-          placeHolder="Search Monsters"
+          className="monsters-search-box"
           onChangeHandler={onSearchChange}
+          placeHolder="Search Monsters"
         ></SearchBox>
         <CardList monsters={filteredMonsters}></CardList>
       </div>
     );
   }
 }
-
+*/
+}
 export default App;
