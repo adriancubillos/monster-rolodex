@@ -6,7 +6,7 @@ export default class SearchBox extends Component {
     const { className, onChangeHandler, placeHolder } = this.props;
     return (
       <input
-        className={className}
+        className={`search-box ${className}`}
         type="search"
         placeholder={placeHolder}
         onChange={onChangeHandler}
