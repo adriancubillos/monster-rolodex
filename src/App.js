@@ -10,16 +10,21 @@ class App extends Component {
       monsters: [],
       searchFiled: "",
     };
-
+    console.log("constructor");
     // HACK
     // we use arrow function instead of this
     // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
+    console.log("componentDidMount");
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json())
-      .then((users) => this.setState({ monsters: users }));
+      .then((users) =>
+        this.setState(() => {
+          return { monsters: users };
+        })
+      );
   }
 
   handleChange = (e) => {
@@ -27,6 +32,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("render");
     const { monsters, searchFiled } = this.state;
     const filteredMonsters = monsters.filter((monster) =>
       monster.name.toLowerCase().includes(searchFiled.toLowerCase())
