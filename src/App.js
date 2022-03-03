@@ -4,10 +4,11 @@ import CardList from './components/card-list/card-list.component';
 import SearchBox from './components/search-box/search-box.component';
 
 const App = () => {
-  //          [value, setValue]   =  initial State
+  //          [value, setValue]  =  useState(initial State)
   const [searchField, setSearchField] = useState('');
   const [monsters, setMonsters] = useState([]);
   const [filteredMonsters, setFilteredMonsters] = useState(monsters);
+  const [title, setTitle] = useState('Monsters Rolodex');
 
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -26,13 +27,23 @@ const App = () => {
     setSearchField(target.value.toLowerCase());
   };
 
+  const onTitleChange = ({ target }) => {
+    setTitle(target.value.toLowerCase());
+  };
+
   return (
     <div className='App'>
-      <h1 className='app-title'>Monsters Rolodex</h1>
+      <h1 className='app-title'>{title}</h1>
       <SearchBox
         className='monsters-search-box'
         onChangeHandler={onSearchChange}
         placeHolder='Search Monsters'
+      ></SearchBox>
+      <br />
+      <SearchBox
+        className='title-search-box'
+        onChangeHandler={onTitleChange}
+        placeHolder='Set Title'
       ></SearchBox>
       <CardList monsters={filteredMonsters}></CardList>
     </div>
